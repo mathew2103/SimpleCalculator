@@ -1,12 +1,41 @@
-# React + Vite
+# Simple Calculator
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Description
+This is a simple calculator project built using JavaScript. It performs basic arithmetic operations such as addition, subtraction, multiplication, and division.
 
-Currently, two official plugins are available:
+## Features
+- Addition
+- Subtraction
+- Multiplication
+- Division
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Installation
+1. Clone the repository:
+    ```sh
+    git clone https://github.com/yourusername/SimpleCalculator.git
+    ```
+2. Navigate to the project directory:
+    ```sh
+    cd SimpleCalculator
+    ```
+3. Install the dependencies:
+    ```sh
+    npm install
+    ```
+4. Start the development server:
+    ```sh
+    npm run dev
+    ```
 
-## Expanding the ESLint configuration
+## How to Use  
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+1. **Choose the First Number**  
+   - Click the **"Press Me"** button to start a rapidly increasing counter.  
+   - Click **"Stop"** to lock in the number as your first operand.  
+
+2. **Select an Operation**  
+   - Enter the operation as a full word: `addition`, `subtraction`, `multiplication`, or `division`.  
+
+3. **Choose the Second Number**  
+   - Play the video and pause at the desired timestamp (in seconds).
+   - The timestamp value is your second operand.
