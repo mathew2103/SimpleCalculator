@@ -344,6 +344,9 @@ function App() {
                 InputProps={{ style: { color: 'black' } }}
                 onChange={(e) => {
                   const value = e.target.value.toLowerCase();
+                  if(value == "+" || value == "-" || value == "*" || value == "/"){
+                    alert("Invalid Character. Use words instead. (Addition, Subtraction..)")
+                  }
                   if (/^[a-zA-Z]*$/.test(value)) {
                     setOpInput(value);
                   }
