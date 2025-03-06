@@ -4,10 +4,11 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { AwesomeButton } from 'react-awesome-button';
 import Typed from 'typed.js';
 import ReactPlayer from 'react-player/youtube'
+import BackspaceOutlinedIcon from '@mui/icons-material/BackspaceOutlined';
 import 'react-awesome-button/dist/styles.css';
-import Box from '@mui/material/Box';
 import './App.css'
-import { Modal } from '@mui/material';
+
+
 
 const style = {
   position: 'absolute',
@@ -349,6 +350,9 @@ function App() {
               <p className='font-bold text-center' id="resultContent">{visibleResult}</p>
             </div>
 
+          </div>
+          <div className='pl-45' hidden={pageId == 0}>
+          <AwesomeButton onPress={() => {location.reload()}}><BackspaceOutlinedIcon fontSize='small'/></AwesomeButton>
           </div>
         </div>
 

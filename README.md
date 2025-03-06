@@ -1,31 +1,7 @@
 # Simple Calculator
 
 ## Description
-This is a simple calculator project built using JavaScript. It performs basic arithmetic operations such as addition, subtraction, multiplication, and division.
-
-## Features
-- Addition
-- Subtraction
-- Multiplication
-- Division
-
-## Installation
-1. Clone the repository:
-    ```sh
-    git clone https://github.com/mathew2103/SimpleCalculator.git
-    ```
-2. Navigate to the project directory:
-    ```sh
-    cd SimpleCalculator
-    ```
-3. Install the dependencies:
-    ```sh
-    npm install
-    ```
-4. Start the development server:
-    ```sh
-    npm run dev
-    ```
+This is a simple calculator project built using JavaScript. It has a very minimalist design and performs basic arithmetic operations such as addition, subtraction, multiplication, and division.
 
 ## How to Use  
 
@@ -39,3 +15,24 @@ This is a simple calculator project built using JavaScript. It performs basic ar
 3. **Choose the Second Number**  
    - Play the video and pause at the desired timestamp (in seconds).
    - The timestamp value is your second operand.
+  
+4. **Pass the captcha test, and you have your result**
+    - Solve the given captcha
+
+## Tech Stack
+React, Vite, TailwindCSS
+
+## Anti Patterns and Rationale
+**Selecting First operand:** No control whatsoever with the user. A start-stop button which starts a VERY fast counter. And as soon as you stop it, at God knows what point, the next button is flying all over the place. Come on, give that guy some freedom.
+
+**Selecting Operator:** We first ask them to fully fill in the operation they want to perform 
+("addition", "subtraction"..) and then tell them that its Godric's Hat that shall decide (randomly)
+
+**Backspace button:** To go back.. to the start.
+
+**Selecting Second operand:** One of the best ways to choose a number? AH yes play through rickroll to the timestamp you want to use.
+**Reset button:** incase they wanna go back.. in the video? NO, to the start of the calculator they go.
+
+**Captcha:** And for the cherry on top, a simple captcha (as if theres bots attacking), asking them to solve the question that they have input, (failure of which leads the website insulting them like an asian parent)
+
+Does this actually work? Yep, absolutely, just have a good reaction time, be lucky enough and good at math.
