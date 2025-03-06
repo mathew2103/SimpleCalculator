@@ -275,7 +275,7 @@ function App() {
 
     if (played) {
       randomPos()
-      if (nextBInterval == 0) setNextBInterval(setInterval(randomPos, 800));
+      if (nextBInterval == 0) setNextBInterval(setInterval(randomPos, 750));
     } else {
       // defPos()
       // clearInterval(nextBInterval)
@@ -298,7 +298,7 @@ function App() {
 
   return (
     <>
-      <div className='container bg-neutral-200 w-80 h-150 rounded-lg p-4 flex flex-col items-center gap-10 relative'>
+      <div className='container bg-neutral-200 h-150 rounded-lg p-4 flex flex-col items-center gap-10 relative'>
         <div className='flex flex-col justify-around gap-5'>
           <div>
             <p className='text-2xl font-bold text-neutral-600'>Calculator.</p>
@@ -306,7 +306,7 @@ function App() {
           </div>
 
 
-          <div className='pl-2 pr-2 gap-3.5 calculation w-65 bg-black h-20 rounded-lg flex items-center justify-around text-4xl'>
+          <div className='pl-3 pr-3 gap-3 calculation bg-black h-20 rounded-lg flex items-center justify-around text-4xl'>
             <div className="p-1 bg-neutral-600 rounded-sm shadow-md shadow-emerald-500 shadow-offset-0" id='op1'>
               <p className='font-bold text-center' id='op1Content'>{op1}</p>
             </div>
@@ -356,7 +356,7 @@ function App() {
             </div>
 
             <div className="flex items-center flex-col" id='page2' hidden={pageId != 2}>
-              <p className='text-black'>Pause at the seconds you want</p>
+              <p className='text-black'>Pause at the timestamp you want for 2nd operand</p>
               {/* <ReactPlayer url='https://www.youtube.com/watch?v=rTgj1HxmUbg' muted={true} volume={0} playing width={250} height={150}  controls={false} /> */}
               {/* onStart={() => {
               setTimeout(() => {
@@ -390,7 +390,7 @@ function App() {
               />
               <p className='text-black inline'>{durationWatched}</p>
               <AwesomeButton onPress={() => { setPaused(true) }}>Pause</AwesomeButton>
-              <AwesomeButton type={"danger"} onPress={location.reload}>Reset</AwesomeButton>
+              <AwesomeButton type={"danger"} onPress={() => {location.reload()}}>Reset</AwesomeButton>
               <div className='flex'> <div className="element text-black"></div></div>
             </div>
 
@@ -435,10 +435,10 @@ function App() {
                       
                       const verifying = document.getElementById("verifying");
                       verifying.hidden = true;
-                      setVisibleResult(findResult().toFixed(2));
+                        setVisibleResult(`${findResult().toFixed(2)}`);
                       display.forEach(d => {
                         const display = document.getElementById(d);
-                          display.className = "p-0.5 bg-neutral-600 rounded-sm text-neutral-100";
+                          display.className = `p-0.5 rounded-sm text-neutral-100 ${d== "result" ? "text-md" : ""}`;
                 
                       })
                     } else {
@@ -457,11 +457,13 @@ function App() {
               </div>
 
             </div>
-            <div hidden={visibleResult == "??"}>
-            <AwesomeButton type={"danger"} onPress={location.reload} >Reset</AwesomeButton>
+            
+          </div>
+          <div hidden={visibleResult == "??"}>
+            <p className='text-neutral-600'>Thanks for using Calculator</p>
+            <AwesomeButton type={"secondary"} onPress={() => {location.reload()}} >Reset</AwesomeButton>
 
             </div>
-          </div>
         </div>
 
       </div>
