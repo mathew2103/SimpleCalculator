@@ -257,7 +257,7 @@ function App() {
     nextB.style.position = 'absolute';
     nextB.style.top = `${Math.floor(Math.random() * 100)}%`;
     nextB.style.left = `${Math.floor(Math.random() * 100)}%`;
-    nextB.style.transition = 'all 0.1s ease-in-out';
+    nextB.style.transition = 'all 0.05s ease-in-out';
     nextB.style.transform = `rotate(${Math.floor(Math.random() * 360)}deg)`;
 
   }
@@ -271,11 +271,37 @@ function App() {
     nextB.style.transition = 'all 0.15s ease-in-out';
     nextB.style.transform = `rotate(0deg)`;
   }
+
+
+  const moveHead = () => {
+    const head = document.getElementById('head');
+    const container = document.querySelector('.container');
+    let x = 1;
+    let y = 1;
+    let posX = 0;
+    let posY = 0;
+
+    const move = () => {
+      const headRect = head.getBoundingClientRect();
+      const containerRect = container.getBoundingClientRect();
+
+      if (headRect.right >= containerRect.right || headRect.left <= containerRect.left) x = -x;
+      if (headRect.bottom >= containerRect.bottom || headRect.top <= containerRect.top) y = -y;
+
+      posX += x;
+      posY += y;
+      head.style.transform = `translate(${posX}px, ${posY}px)`;
+    };
+
+    const interval = setInterval(move, 10);
+    return () => clearInterval(interval);
+  }
   useEffect(() => {
 
     if (played) {
       randomPos()
-      if (nextBInterval == 0) setNextBInterval(setInterval(randomPos, 750));
+      clearInterval(nextBInterval);
+       setNextBInterval(setInterval(randomPos, 530 - 30*pageId ));
     } else {
       // defPos()
       // clearInterval(nextBInterval)
@@ -299,14 +325,14 @@ function App() {
   return (
     <>
       <div className='container bg-neutral-200 h-150 rounded-lg p-4 flex flex-col items-center gap-10 relative'>
-        <div className='flex flex-col justify-around gap-5'>
-          <div>
+        <div className='flex flex-col justify-around gap-5 z-1'>
+          <div id="head" className='absolute top-5 left-15 z-100'>
             <p className='text-2xl font-bold text-neutral-600'>Calculator.</p>
             <p className='text-sm text-neutral-500 italic'>What could go wrong?</p>
           </div>
 
 
-          <div className='pl-3 pr-3 gap-3 calculation bg-black h-20 rounded-lg flex items-center justify-around text-4xl'>
+          <div className='pl-3 pr-3 mt-15 gap-3 calculation bg-black h-20 rounded-lg flex items-center justify-around text-4xl'>
             <div className="p-1 bg-neutral-600 rounded-sm shadow-md shadow-emerald-500 shadow-offset-0" id='op1'>
               <p className='font-bold text-center' id='op1Content'>{op1}</p>
             </div>
@@ -396,7 +422,7 @@ function App() {
 
 
           </div>
-          <div id="next">
+          <div id="next" className='z-0'>
             <AwesomeButton disabled={!played} onPress={funcs[pageId]} className='absolute'>Next</AwesomeButton>
           </div>
         </div>
@@ -441,6 +467,7 @@ function App() {
                           display.className = `p-0.5 rounded-sm text-neutral-100 ${d== "result" ? "text-md" : ""}`;
                 
                       })
+                      moveHead();
                     } else {
                       alert(`WRONG! ${mathInsults[Math.floor(Math.random() * mathInsults.length)]}`)
                     }
