@@ -1,10 +1,13 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import TextField from '@mui/material/TextField';
 import CircularProgress from '@mui/material/CircularProgress';
 import { AwesomeButton } from 'react-awesome-button';
 import Typed from 'typed.js';
 import ReactPlayer from 'react-player/youtube'
 import BackspaceOutlinedIcon from '@mui/icons-material/BackspaceOutlined';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+
 import 'react-awesome-button/dist/styles.css';
 import './App.css'
 
@@ -122,7 +125,7 @@ const mathInsults = [
   "If your math skills were a game, it would be on hard mode with no tutorial."
 ];
 
-console.log(); // Random insult
+
 
 
 function App() {
@@ -142,13 +145,16 @@ function App() {
   const [resultInput, setResultInput] = useState(0);
   const [visibleResult, setVisibleResult] = useState("??");
   const [finalSubmitMess, setFinalSubmitMess] = useState(false);
+  const [progressValue, setProgressValue] = useState(0);
+  const [showLoading, setShowLoading] = useState(false);
+  const r = useRef(null);
   const display = ["op1", "op", "op2", "equals", "result"]
   const operations = ["add", "subtract", "multiply", "divide", "addition", "subtraction", "multiplication", "division"]
 
-  // toast()
+
 
   function opClick() {
-    if (operations.find(e => e == opInput) == undefined) return alert("Thats not even an operation");
+    if (operations.find(e => e == opInput) == undefined) return alert("Thats not even an operation. (Only supports +, -, *, /)");
     setPlayed(false);
     const opInputBox = document.getElementById("opInput");
     opInputBox.disabled = true;
@@ -167,7 +173,7 @@ function App() {
             { text: "DIVIDING", op: '/' }
           ];
           const operation = operationsTable[Math.floor(Math.random() * operationsTable.length)];
-          // typed.destroy();
+          
           const typed2 = new Typed('.element', {
             strings: [`Alright! We are ${operation.text.toUpperCase()}`],
             typeSpeed: 10,
@@ -188,7 +194,8 @@ function App() {
     });
   }
   function updatePage() {
-
+    
+    
     if (pageId < 2) {
       const page = document.getElementById(`page${pageId}`);
       const opDisplay = document.getElementById(display[pageId]);
@@ -197,7 +204,7 @@ function App() {
       newOpDisplay.className = "p-1 bg-neutral-600 rounded-sm shadow-md shadow-emerald-500 shadow-offset-0 text-neutral-100 text-5xl";
     } else {
       display.forEach(d => {
-        //do this for all except last element
+        
         if (d != "result") {
 
           const display = document.getElementById(d);
@@ -213,7 +220,7 @@ function App() {
     setPageId(pageId + 1);
   }
 
-  function op1Click() {
+  function handleOp1Counter() {
     if (intervalId == 0) {
       setPlayed(false);
       let i = 0;
@@ -234,6 +241,7 @@ function App() {
   function op2Click() {
     updatePage()
     setPaused(true);
+    r.current.playing = false;
   }
 
   function findResult() {
@@ -252,25 +260,16 @@ function App() {
   const funcs = [updatePage, opClick, op2Click];
   const [nextBInterval, setNextBInterval] = useState(0);
   const randomPos = (p = "next") => {
-    //place the button randomly
+    
+    
     const nextB = document.getElementById(p);
-    // return console.log(nextB)
+    
     nextB.style.position = 'absolute';
     nextB.style.top = `${Math.floor(Math.random() * 100)}%`;
     nextB.style.left = `${Math.floor(Math.random() * 100)}%`;
     nextB.style.transition = 'all 0.05s ease-in-out';
     nextB.style.transform = `rotate(${Math.floor(Math.random() * 360)}deg)`;
 
-  }
-  const defPos = () => {
-    //place the button randomly
-    const nextB = document.getElementById('next');
-    // return console.log(nextB)
-    nextB.style.position = 'absolute';
-    nextB.style.top = `50%`;
-    nextB.style.left = `50%`;
-    nextB.style.transition = 'all 0.15s ease-in-out';
-    nextB.style.transform = `rotate(0deg)`;
   }
 
 
@@ -325,10 +324,10 @@ function App() {
 
   return (
     <>
-      <div className='container bg-neutral-200 h-150 rounded-lg p-4 flex flex-col items-center gap-10 relative'>
-        <div className='flex flex-col justify-around gap-5 z-1'>
-          <div id="head" className='absolute top-5 left-15 z-100'>
-            <p className='text-2xl font-bold text-neutral-600'>Calculator.</p>
+      <div className='container bg-neutral-200 h-150 rounded-4xl p-4 flex flex-col items-center gap-10 relative'>
+        <div className='flex flex-col justify-around gap-5 z-1 pl-5 pr-5'>
+          <div id="head" className='absolute top-5 left-5 z-100'>
+            <p className='text-2xl font-bold text-neutral-600'>Simple Calculator.</p>
             <p className='text-sm text-neutral-500 italic'>What could go wrong?</p>
           </div>
 
@@ -361,7 +360,7 @@ function App() {
 
             <div className="flex items-center flex-col" id='page0' hidden={pageId != 0}>
               <p className='text-neutral-500'>Select First Operand</p>
-              <AwesomeButton type={intervalId == 0 ? "primary" : "danger"} onPress={op1Click}>{intervalId == 0 ? "Press ME" : "Stop"}</AwesomeButton>
+              <AwesomeButton type={intervalId == 0 ? "primary" : "danger"} onPress={handleOp1Counter}>{intervalId == 0 ? "Press ME" : "Stop"}</AwesomeButton>
             </div>
 
 
@@ -386,7 +385,7 @@ function App() {
             </div>
 
             <div className="flex items-center flex-col" id='page2' hidden={pageId != 2}>
-              <p className='text-black'>Pause at the timestamp you want for 2nd operand</p>
+              <p className='text-black'>Pause at the timestamp you want for 2nd operand<br/>(Click/Tap on the video to pause/play)</p>
               {/* <ReactPlayer url='https://www.youtube.com/watch?v=rTgj1HxmUbg' muted={true} volume={0} playing width={250} height={150}  controls={false} /> */}
               {/* onStart={() => {
               setTimeout(() => {
@@ -407,9 +406,11 @@ function App() {
                 muted={muted}
                 controls={false}
                 onProgress={(p) => {
-
-                  setDurationWatched(p.playedSeconds.toFixed(2));
+                  if(pageId == 2){
+                    setDurationWatched(p.playedSeconds.toFixed(2));
                   setOp2(p.playedSeconds.toFixed(2));
+                  }
+                  
                 }}
                 onPause={() => {
                   setPlayed(true);
@@ -417,9 +418,10 @@ function App() {
                 onPlay={() => {
                   setPlayed(false)
                 }}
-              />
-              <p className='text-black inline'>{durationWatched}</p>
-              <AwesomeButton onPress={() => { setPaused(true) }}>Pause</AwesomeButton>
+                ref={r}
+                />
+                <p className='text-black inline'>{durationWatched}</p>
+                {/* <AwesomeButton onPress={() => { setPaused(true) }}>Pause</AwesomeButton> */}
               <AwesomeButton type={"danger"} onPress={() => {location.reload()}}>Reset</AwesomeButton>
               <div className='flex'> <div className="element text-black"></div></div>
             </div>
@@ -427,9 +429,40 @@ function App() {
 
           </div>
           <div id="next" className='z-0'>
-            <AwesomeButton disabled={!played} onPress={funcs[pageId]} className='absolute'>Next</AwesomeButton>
+            <AwesomeButton disabled={!played} onPress={() => {
+              setShowLoading(true)
+              setPlayed(false)
+              setProgressValue(1)
+              setTimeout(() => {
+                const randomNum = Math.floor(Math.random() * 64) + 4;
+                setProgressValue(randomNum);
+              }, 2.5*1000)
+              setTimeout(() => {
+                setProgressValue(69);
+              }, 1*1000);
+              setTimeout(() => {
+                
+                const randomNum = Math.floor(Math.random() * 14) + 55;
+
+                setProgressValue(randomNum);
+              }, 6.5*1000);
+              
+              setTimeout(() => {
+
+                setProgressValue(99);
+              }, 5.5*1000);
+
+              setTimeout(() => {
+                setPlayed(true)
+                setShowLoading(false)
+
+                funcs[pageId]();
+              }, 9.5*1000)
+            }} className='absolute'>Next</AwesomeButton>
           </div>
+          
         </div>
+
 
         <div hidden={selecting}>
           <div className='bg-neutral-800 mt-10 flex p-5 gap-5 text-sm' id="verifying">
@@ -472,6 +505,10 @@ function App() {
                 
                       })
                       moveHead();
+                      setShowLoading(true);
+                      setInterval(() => {
+                        setProgressValue(Math.floor(Math.random() * 100));
+                      }, 1000);
                     } else {
                       alert(`WRONG! ${mathInsults[Math.floor(Math.random() * mathInsults.length)]}`)
                     }
@@ -491,11 +528,35 @@ function App() {
             
           </div>
           <div hidden={visibleResult == "??"}>
-            <p className='text-neutral-600'>Thanks for using Calculator</p>
+            <p className='text-neutral-600'>Thanks for using Simple Calculator.</p>
             <AwesomeButton type={"secondary"} onPress={() => {location.reload()}} >Reset</AwesomeButton>
 
             </div>
         </div>
+        <div className="loadingScreen" hidden={!showLoading}>
+            {/* <CircularProgress variant="determinate" value={progressValue} hidden={!showLoading} /> */}
+            <Box sx={{ position: 'relative', display: 'inline-flex' }}>
+      <CircularProgress variant="determinate" value={progressValue} />
+      <Box
+        sx={{
+          top: 0,
+          left: 0,
+          bottom: 0,
+          right: 0,
+          position: 'absolute',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <Typography
+          variant="caption"
+          component="div"
+          sx={{ color: 'text.secondary' }}
+        >{`${progressValue}%`}</Typography>
+      </Box>
+    </Box>
+          </div>
 
       </div>
     </>
