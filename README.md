@@ -23,7 +23,7 @@ This is a simple calculator project built using JavaScript. It has a very minima
 React, Vite, TailwindCSS
 
 ## Anti Patterns and Rationale
-**Selecting First operand:** No control whatsoever with the user. A start-stop button which starts a VERY fast counter. And as soon as you stop it, at God knows what point, the next button is flying all over the place. Come on, give that guy some freedom.
+**Selecting First operand:** No control whatsoever with the user. A start-stop button which starts a VERY fast counter. And as soon as you stop it, at God knows what point, the `next` button is flying all over the place. Come on, give that guy some freedom.
 
 **Selecting Operator:** We first ask them to fully fill in the operation they want to perform 
 ("addition", "subtraction"..) and then tell them that its Godric's Hat that shall decide (randomly)
@@ -33,6 +33,6 @@ React, Vite, TailwindCSS
 **Selecting Second operand:** One of the best ways to choose a number? AH yes play through rickroll to the timestamp you want to use.
 **Reset button:** incase they wanna go back.. in the video? NO, to the start of the calculator they go.
 
-**Captcha:** And for the cherry on top, a simple captcha (as if theres bots attacking), asking them to solve the question that they have input, (failure of which leads the website insulting them like an asian parent)
+**Captcha:** And for the cherry on top, a simple captcha (as if theres bots attacking), asking them to solve the same question they have just inputted, (failure of which leads the website insulting them like an asian parent)
 
 Does this actually work? Yep, absolutely, just have a good reaction time, be lucky enough and good at math.
