@@ -24,6 +24,7 @@ React, Vite, TailwindCSS
 
 ## Anti Patterns and Rationale
 **Selecting First operand:** No control whatsoever with the user. A start-stop button which starts a VERY fast counter. And as soon as you stop it, at God knows what point, the `next` button is flying all over the place. Come on, give that guy some freedom.
+
 A loading bar after everytime you press next, serving no purpose, just randomly showing progress, that too not in the traditional increasing order, in a random assortment instead. Who doesnt like some unnecessary wait time?
 
 **Selecting Operator:** We first ask them to fully fill in the operation they want to perform 
