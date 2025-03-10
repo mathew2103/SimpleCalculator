@@ -147,6 +147,7 @@ function App() {
   const [finalSubmitMess, setFinalSubmitMess] = useState(false);
   const [progressValue, setProgressValue] = useState(0);
   const [showLoading, setShowLoading] = useState(false);
+  const [disableCounterB, setDisableCounterB] = useState(false);
   const r = useRef(null);
   const display = ["op1", "op", "op2", "equals", "result"]
   const operations = ["add", "subtract", "multiply", "divide", "addition", "subtraction", "multiplication", "division"]
@@ -239,6 +240,10 @@ function App() {
   }
 
   function op2Click() {
+    if(operator == "/" &&  parseFloat(op2) == 0){
+      alert("You divide by zero? Aiyah… even your future has no solution now!!")
+      setOp2(0.01);
+    };
     updatePage()
     setPaused(true);
     r.current.playing = false;
@@ -271,6 +276,16 @@ function App() {
     nextB.style.transform = `rotate(${Math.floor(Math.random() * 360)}deg)`;
 
   }
+  const defPos = (p = "next") => {
+    
+    const nextB = document.getElementById(p);
+    
+    nextB.style.position = 'absolute';
+    nextB.style.top = `80%`;
+    nextB.style.left = `50%`;
+    nextB.style.transition = 'all 0.15s ease-in-out';
+    nextB.style.transform = `rotate(0deg)`;
+  }
 
 
   const moveHead = () => {
@@ -301,7 +316,7 @@ function App() {
     if (played) {
       randomPos()
       clearInterval(nextBInterval);
-       setNextBInterval(setInterval(randomPos, 530 - 30*pageId ));
+       setNextBInterval(setInterval(randomPos, 500 - 15*pageId ));
     } else {
       // defPos()
       // clearInterval(nextBInterval)
@@ -360,7 +375,7 @@ function App() {
 
             <div className="flex items-center flex-col" id='page0' hidden={pageId != 0}>
               <p className='text-neutral-500'>Select First Operand</p>
-              <AwesomeButton type={intervalId == 0 ? "primary" : "danger"} onPress={handleOp1Counter}>{intervalId == 0 ? "Press ME" : "Stop"}</AwesomeButton>
+              <AwesomeButton type={intervalId == 0 ? "primary" : "danger"} onPress={handleOp1Counter} disabled={disableCounterB}>{intervalId == 0 ? "Press ME" : "Stop"}</AwesomeButton>
             </div>
 
 
@@ -431,6 +446,9 @@ function App() {
           <div id="next" className='z-0'>
             <AwesomeButton disabled={!played} onPress={() => {
               setShowLoading(true)
+              setDisableCounterB(true);
+              clearInterval(nextBInterval);
+              defPos();
               setPlayed(false)
               setProgressValue(1)
               setTimeout(() => {
@@ -536,7 +554,7 @@ function App() {
         <div className="loadingScreen" hidden={!showLoading}>
             {/* <CircularProgress variant="determinate" value={progressValue} hidden={!showLoading} /> */}
             <Box sx={{ position: 'relative', display: 'inline-flex' }}>
-      <CircularProgress variant="determinate" value={progressValue} />
+      <CircularProgress variant="determinate" value={progressValue} size={95}/>
       <Box
         sx={{
           top: 0,
